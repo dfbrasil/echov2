@@ -1,6 +1,7 @@
 package api
 
 import (
+
 	"net/http"
 	"strconv"
 
@@ -23,6 +24,10 @@ type BooksParams struct{
 
 type BookIDParams struct{
 	ID int `param:"id"`
+}
+
+type HelloWorld struct {
+    Messagem string `json:"message"`
 }
 
 // type PostBook struct{
@@ -104,4 +109,17 @@ func (a *API) updateBook(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 	books[id].Title = b.Title
 	return c.JSON(http.StatusOK, books[id])
+	
+}
+
+func (a *API) Parametros(c echo.Context) error {
+    params, err := c.Param("name"), echo.ErrBadRequest
+
+	if err != nil{
+		return c.JSON(http.StatusOK, HelloWorld{
+			Messagem: "Olá Mundo, meu nome é " + params, 
+		})
+	}
+	
+    return err
 }

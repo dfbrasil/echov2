@@ -19,5 +19,6 @@ func (a *API) RegisterRoutes(e *echo.Echo) { //registra as rotas da API
 	protected.POST("/books", a.postBook)
 	public.DELETE("/books/:id", a.deleteBook)
 	public.PUT("/books/:id", a.updateBook)
+	public.GET("/:name", a.Parametros)
 	
 }
