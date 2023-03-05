@@ -27,12 +27,8 @@ type BookIDParams struct{
 }
 
 type HelloWorld struct {
-    Messagem string `json:"message"`
+    Message string `json:"message"`
 }
-
-// type PostBook struct{
-// 	Title string `json:"title"`
-// }
 
 var (
 	books = map[int]*book{}
@@ -45,15 +41,15 @@ func (a *API) getBooks(c echo.Context)  error {
 
 	err := c.Bind(params)
 	if err != nil{ //se tem erro devolve o status de bad request
-		return c.JSON(http.StatusBadRequest, "Parâmetro de query inválidos") //c.jason devolve um status e um erro
+		return c.JSON(http.StatusBadRequest, "invalid query parameters") //c.jason devolve um status e um erro
 	}
 
 	if params.Offset > len(books) || params.Offset < 0 {
-		return c.JSON(http.StatusBadRequest, "Parâmetro de query inválidos")
+		return c.JSON(http.StatusBadRequest, "invalid query parameters")
 	}
 
 	if params.Limit < 0 || params.Limit > len(books) {
-		return c.JSON(http.StatusBadRequest, "Parâmetro de query inválidos")
+		return c.JSON(http.StatusBadRequest, "invalid query parameters")
 	}
 
 	return c.JSON(http.StatusOK, books)
@@ -65,16 +61,20 @@ func (a *API) getBook(c echo.Context) error {
 	
 	err := c.Bind(params)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, "Parâmentros inválidos")
+		return c.JSON(http.StatusBadRequest, "invalid parameters")
 	}
 
 	index := params.ID - 1
 
 	if index < 0 || index > len(books)-1 {
-		return c.JSON(http.StatusBadRequest, "Parâmentros inválidos")
+		return c.JSON(http.StatusBadRequest, "invalid parameters")
 	}
 	
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil{
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "could not convert parameter 'id' to integer"})
+	}
 	return c.JSON(http.StatusOK, books[id])
 }
 
@@ -85,7 +85,7 @@ func (a *API) postBook(c echo.Context) error {
 	}
 
 	if err := c.Bind(b); err != nil{
-		return c.JSON(http.StatusBadRequest, "Parâmetro Inválido")
+		return c.JSON(http.StatusBadRequest, "invalid parameter")
 	}
 
 	books[b.ID] = b
@@ -95,21 +95,32 @@ func (a *API) postBook(c echo.Context) error {
 
 func (a *API) deleteBook(c echo.Context) error {
 
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "invalid parameter")
+	}
+
 	delete(books,id)
 	return c.NoContent(http.StatusNoContent)
 }
 
 func (a *API) updateBook(c echo.Context) error {
+
 	b := new(book)
+
 	if err := c.Bind(b); err != nil{
-		return err
+		return c.JSON(http.StatusBadRequest, "invalid parameter")
 	}
 
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil{
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "could not convert parameter 'id' to integer"})
+	}
+
 	books[id].Title = b.Title
 	return c.JSON(http.StatusOK, books[id])
-	
 }
 
 func (a *API) Parametros(c echo.Context) error {
@@ -117,7 +128,7 @@ func (a *API) Parametros(c echo.Context) error {
 
 	if err != nil{
 		return c.JSON(http.StatusOK, HelloWorld{
-			Messagem: "Olá Mundo, meu nome é " + params, 
+			Message: "Olá Mundo, meu nome é " + params, 
 		})
 	}
 	

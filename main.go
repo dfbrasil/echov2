@@ -14,7 +14,7 @@ func handleIndex(c echo.Context) error{ //as funções em Echo devem retornar um
 func main(){
 	e := echo.New() // um objeto de ECHO que está retornando um ponteiro de ECHO
 
-	e.GET("/", handleIndex) //a este objeto Echo está mapedao uma rota
+	e.GET("/", handleIndex) //a este objeto Echo está mapeada uma rota
 
 	a := &api.API{}
 	a.RegisterRoutes(e)

@@ -32,9 +32,8 @@ func authMidlleware(next echo.HandlerFunc) echo.HandlerFunc{
 		user := c.Request().Header.Get("Authorization")
 
 		if users[user] == "" {
-			return c.JSON(http.StatusUnauthorized, "Não autorizado")
+			return c.JSON(http.StatusUnauthorized, "not authorized")
 		}
-
 		return next(c)
 	}
 }
