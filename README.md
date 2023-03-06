@@ -3,16 +3,16 @@ Api Rest in GoLang - Echo Framework
 
 # Echo API
 
-This is a simple application that allows you to perform CRUD operations on a list of users.
+This is a simple application that allows you to perform CRUD operations on a list of books.
 
 ## Usage
 
 To run the application, you should have Go installed on your machine. Then, follow these steps:
 
 1. Clone the repository to your machine:
-   `git clone https://github.com/ruangustavo/echo-api.git`
+   `git clone https://github.com/dfbrasil/echov2.git`
 
-2. Navigate to the repository directory: `cd echo-api`
+2. Navigate to the repository directory: `cd echov2`
 
 3. Run the application: `go run main.go`
 
@@ -24,20 +24,12 @@ Enjoy! If you have any questions or issues, please feel free to reach out to us.
 
 | Endpoint                | Method | Description                                                                                                                 |
 | ----------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------- |
-| `/api/users`            | GET    | Returns a list of all users in the system.                                                                                  |
-| `/api/users/:id`        | GET    | Returns the user with the specified ID.                                                                                     |
-| `/api/users/create`     | POST   | Allows you to create a new user. You should include a JSON payload with the user's details in the request body.             |
-| `/api/users/:id/update` | PUT    | Allows you to update an existing user. You should include a JSON payload with the updated user details in the request body. |
-| `/api/users/:id/delete` | DELETE | Allows you to delete a user with the specified ID.                                                                          |
+| `/users`            | GET    | Returns a list of all users in the system.                                                                                  |
+| `/users/:id`        | GET    | Returns the user with the specified ID.                                                                                     |
+| `/users`     | POST   | Allows you to create a new user. You should include a JSON payload with the user's details in the request body.             |
+| `/users/:id` | PUT    | Allows you to update an existing user. You should include a JSON payload with the updated user details in the request body. |
+| `/api/:id` | DELETE | Allows you to delete a user with the specified ID.                                                                          |
 
-## Future Updates
-
-Here are some potential updates we may make to the application in the future:
-
-- [ ] Add support for user authentication and authorization
-- [ ] Implement pagination for the `/api/users` endpoint to limit the number of results returned
-- [ ] Add support for searching and filtering users by various criteria, such as name or email address
-- [ ] Improve error handling and provide more informative error messages to clients
-- [ ] Implement unit and integration tests to ensure the application works as expected
+## PowerPoint Apresentation about Echo/Best Practices (PT-BR)
 
 https://academicoifrnedu-my.sharepoint.com/:p:/g/personal/d_brasil_academico_ifrn_edu_br/EXzmuc0zKHJFtaYhhuDdackBwTePxcmB3z4m7gM9Oc3XWg?e=fDU6XO
